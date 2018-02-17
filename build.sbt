@@ -1,6 +1,7 @@
 val Http4sVersion = "0.18.0"
 val LogbackVersion = "1.2.3"
 val MinitestVersion = "2.0.0"
+val CirceVersion = "0.9.1"
 
 lazy val root = (project in file("."))
   .settings(
@@ -12,6 +13,8 @@ lazy val root = (project in file("."))
       "org.http4s"      %% "http4s-blaze-server" % Http4sVersion,
       "org.http4s"      %% "http4s-circe"        % Http4sVersion,
       "org.http4s"      %% "http4s-dsl"          % Http4sVersion,
+      "io.circe"        %% "circe-literal"       % CirceVersion,
+      "io.circe"        %% "circe-generic"       % CirceVersion,
       "ch.qos.logback"  %  "logback-classic"     % LogbackVersion,
       "io.monix"        %% "minitest"            % MinitestVersion % "test",
       "io.monix"        %% "minitest-laws"       % MinitestVersion % "test"

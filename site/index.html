@@ -78,16 +78,37 @@
       <h1>WebSocket Example</h1>
       <div id="chat"></div>
 
+      <select id="rooms">
+          <option value="room1">room1</option>
+      </select>
       <input id="message" type="text"/>
       <script>
-       var ws = new WebSocket("ws://localhost:8080/chat/noel");
-       var chat = document.getElementById("chat");
-       var message = document.getElementById("message")
-       ws.onmessage = (msg) => {
-           chat.insertAdjacentHTML('afterbegin', `<p>${msg.data}</p>`)
-       }
+          function httpGet(theUrl) {
+              var xmlHttp = new XMLHttpRequest();
+              xmlHttp.open("GET", theUrl, false); // false for synchronous request
+              xmlHttp.send(null);
+              return xmlHttp.responseText;
+          }
 
-       message.oninput = (msg) => { ws.send(msg) }
+          var rooms = httpGet('http://localhost:8080/rooms');
+          console.log(rooms);
+
+          var ws = new WebSocket("ws://localhost:8080/chat/noel");
+          var chat = document.getElementById("chat");
+          var message = document.getElementById("message");
+          ws.onmessage = (msg) =>
+          {
+              console.log(msg);
+              chat.insertAdjacentHTML('afterbegin', `<p>${msg.data}</p>`)
+          }
+
+          message.onkeypress = (event) =>
+          {
+              if (event.which === 13) {
+                  ws.send(event.target.value);
+                  message.value = "";
+              }
+          }
       </script>
   </body>
 </html>
